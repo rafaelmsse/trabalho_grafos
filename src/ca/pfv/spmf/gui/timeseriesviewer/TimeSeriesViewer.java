@@ -8,8 +8,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.ComboBox;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
