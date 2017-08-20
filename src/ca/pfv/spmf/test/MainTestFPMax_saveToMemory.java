@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPMax;
+import ca.pfv.spmf.algorithms.frequentpatterns.fpgrowth.AlgoFPMax2;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 
 
@@ -20,7 +21,7 @@ public class MainTestFPMax_saveToMemory {
 		String input = fileToPath("contextPasquier99.txt");  // the database
 
 		// the minimum support threshold
-		double minsup = 0.6; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.4; // means a minsup of 2 transaction (we used a relative support)
 
 		// Applying the FPMax algorithm
 		AlgoFPMax algo = new AlgoFPMax();

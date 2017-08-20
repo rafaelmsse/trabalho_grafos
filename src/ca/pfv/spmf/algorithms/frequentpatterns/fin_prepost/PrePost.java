@@ -5,9 +5,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -56,6 +58,7 @@ public class PrePost {
 	public int bf_size;
 	public int bf_col;
 	public int bf_currentSize;
+	public List<List<Integer>> lista;
 
 	public int numOfFItem; // Number of items
 	public int minSupport; // minimum support
@@ -111,7 +114,7 @@ public class PrePost {
 	 * @throws IOException
 	 *             if error while reading/writting to file
 	 */
-	public void runAlgorithm(String filename, double minsup, String output)
+	public void runAlgorithm(String filename, double minsup, String output,List<List<Integer>> lista)
 			throws IOException {
 		outputCount = 0;
 		nlNodeCount = 0;
@@ -120,7 +123,8 @@ public class PrePost {
 		resultLen = 0;
 		resultCount = 0;
 		nlLenSum = 0;
-
+		this.lista = lista;
+		output = ".//xdxd.txt";
 		MemoryLogger.getInstance().reset();
 
 		// create object for writing the output file
@@ -607,19 +611,20 @@ public class PrePost {
 
 		// create a stringuffer
 		StringBuilder buffer = new StringBuilder();
-		
+		ArrayList<Integer> listaAux = new ArrayList<>();
 		if(curNode.support >= minSupport) {
 			outputCount++;
 	
 			// append items from the itemset to the StringBuilder
 			for (int i = 0; i < resultLen; i++) {
-				buffer.append(item[result[i]].index);
-				buffer.append(' ');
+				listaAux.add(item[result[i]].index);
+				//buffer.append(item[result[i]].index);
+				//buffer.append(' ');
 			}
 			// append the support of the itemset
-			buffer.append("#SUP: ");
-			buffer.append(curNode.support);
-			buffer.append("\n");
+//			buffer.append("#SUP: ");
+//			buffer.append(curNode.support);
+			//buffer.append("\n");
 		}
 		// === Write all combination that can be made using the node list of
 		// this itemset
@@ -627,8 +632,9 @@ public class PrePost {
 			// generate all subsets of the node list except the empty set
 			for (long i = 1, max = 1 << sameCount; i < max; i++) {
 				for (int k = 0; k < resultLen; k++) {
-					buffer.append(item[result[k]].index);
-					buffer.append(' ');
+					listaAux.add(item[result[k]].index);
+					//buffer.append(item[result[k]].index);
+					//buffer.append(' ');
 				}
 
 				// we create a new subset
@@ -637,20 +643,22 @@ public class PrePost {
 					int isSet = (int) i & (1 << j);
 					if (isSet > 0) {
 						// if yes, add it to the set
-						buffer.append(item[sameItems[j]].index);
-						buffer.append(' ');
+						listaAux.add(item[result[j]].index);
+						//buffer.append(item[sameItems[j]].index);
+						//buffer.append(' ');
 						// newSet.add(item[sameItems[j]].index);
 					}
 				}
-				buffer.append("#SUP: ");
-				buffer.append(curNode.support);
+//				buffer.append("#SUP: ");
+//				buffer.append(curNode.support);
 				buffer.append("\n");
 				outputCount++;
 			}
 		}
 		// write the strinbuffer to file and create a new line
 		// so that we are ready for writing the next itemset.
-		writer.write(buffer.toString());
+		//writer.write(buffer.toString());
+		this.lista.add(listaAux);
 	}
 
 	/**

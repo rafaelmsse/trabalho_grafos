@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ca.pfv.spmf.algorithms.frequentpatterns.fin_prepost.PrePost;
+
 /**
  * This class represents a transaction database (a.k.a. binary context), implemented
  * as a list of integers. It can read a transaction database directly from a file. 
@@ -38,7 +40,7 @@ public class TransactionDatabase {
 	// The list of items in this database
 	private final Set<Integer> items = new HashSet<Integer>();
 	// the list of transactions
-	private final List<List<Integer>> transactions = new ArrayList<List<Integer>>();
+	private List<List<Integer>> transactions = new ArrayList<List<Integer>>();
 
 	/**
 	 * Method to add a new transaction to this database.
@@ -80,6 +82,18 @@ public class TransactionDatabase {
 			}
 		}
 	}
+	
+	public void loadFile2(String path) throws IOException {
+		PrePost prepost = new PrePost();
+		// this line is to indicate that we want PrePost+ instead of PrePost
+		prepost.setUsePrePostPlus(true);
+		List<List<Integer>> lista = new ArrayList<List<Integer>>();
+		prepost.runAlgorithm(path, 0.4, "",lista);
+		this.transactions = lista;
+		
+		
+	}
+
 
 	/**
 	 * This method process a line from a file that is read.

@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ca.pfv.spmf.algorithms.frequentpatterns.fin_prepost.PrePost;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset;
 import ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemsets;
 import ca.pfv.spmf.tools.MemoryLogger;
@@ -145,7 +146,7 @@ public class AlgoFPMax {
 		// convert the minimum support as percentage to a
 		// relative minimum support
 		this.minSupportRelative = (int) Math.ceil(minsupp * transactionCount);
-		
+		this.minSupportRelative = 1;
 
 		// Create the MFI Tree
 		mfiTree = new MFITree();	
@@ -160,25 +161,20 @@ public class AlgoFPMax {
 		BufferedReader reader = new BufferedReader(new FileReader(input));
 		String line;
 		// for each line (transaction) until the end of the file
-		while( ((line = reader.readLine())!= null)){ 
+		PrePost prepost = new PrePost();
+		// this line is to indicate that we want PrePost+ instead of PrePost
+		prepost.setUsePrePostPlus(true);
+		List<List<Integer>> lista = new ArrayList<List<Integer>>();
+		prepost.runAlgorithm(input, minsupp, output,lista);
+		for (List<Integer> elemento : lista) {			
+		
 			// if the line is  a comment, is  empty or is a
 			// kind of metadata
-			if (line.isEmpty() == true ||	line.charAt(0) == '#' || line.charAt(0) == '%'
-				|| line.charAt(0) == '@') {
-				continue;
-			}
 			
-			String[] lineSplited = line.split(" ");
-			List<Integer> transaction = new ArrayList<Integer>();
 			
-			// for each item in the transaction
-			for(String itemString : lineSplited){  
-				Integer item = Integer.parseInt(itemString);
-				// only add items that have the minimum support
-				if(originalMapSupport.get(item) >= minSupportRelative){
-					transaction.add(item);	
-				}
-			}
+			
+			List<Integer> transaction = elemento;			
+			
 			// sort item in the transaction by descending order of support
 			Collections.sort(transaction, comparatorOriginalOrder);
 			// add the sorted transaction to the fptree.

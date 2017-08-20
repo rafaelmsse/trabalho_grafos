@@ -147,7 +147,7 @@ public class AlgoCharm_Bitset {
 		// convert from an absolute minsup to a relative minsup by multiplying
 		// by the database size
 		this.minsupRelative = (int) Math.ceil(minsup * database.size());
-
+		//this.minsupRelative = 1;
 		// (1) First database pass : calculate tidsets of each item.
 		// This map will contain the tidset of each item
 		// Key: item   Value :  tidset

@@ -24,7 +24,7 @@ public class MainTestCharmMFI_saveToMemory {
 		String input = fileToPath("contextPasquier99.txt");  // the database
 
 		// minimum support
-		double minsup = 0.4; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.10; // means a minsup of 2 transaction (we used a relative support)
 
 		// Loading the binary context
 		TransactionDatabase database = new TransactionDatabase();
@@ -33,7 +33,7 @@ public class MainTestCharmMFI_saveToMemory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		database.printDatabase();
+		//database.printDatabase();
 		
 		// Applying the Charm algorithm
 		AlgoCharm_Bitset algo = new AlgoCharm_Bitset();
