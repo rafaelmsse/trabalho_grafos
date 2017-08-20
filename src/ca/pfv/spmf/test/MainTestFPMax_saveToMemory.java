@@ -21,21 +21,32 @@ public class MainTestFPMax_saveToMemory {
 		String input = fileToPath("contextPasquier99.txt");  // the database
 
 		// the minimum support threshold
-		double minsup = 0.4; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.7; // means a minsup of 2 transaction (we used a relative support)
 
 		// Applying the FPMax algorithm
-		AlgoFPMax algo = new AlgoFPMax();
+		AlgoFPMax2 algo2 = new AlgoFPMax2();
 		// Run the algorithm
 		// Note that here we use "null" as output file path because we want to keep the results into memory instead of saving to a file
-		Itemsets patterns = algo.runAlgorithm(input, null, minsup);  
+		Itemsets patterns = algo2.runAlgorithm(input, null, minsup);  
 		
 		// Show the MFI-Tree for debugging!
 //		System.out.println(algo.mfiTree);
 		
 		// show the execution time and other statistics
-		algo.printStats();
+		algo2.printStats();
 		// print the patterns to System.out
-		patterns.printItemsets(algo.getDatabaseSize());
+		//patterns.printItemsets(algo.getDatabaseSize());
+		// Applying the FPMax algorithm
+		AlgoFPMax algo = new AlgoFPMax();
+		// Run the algorithm
+		// Note that here we use "null" as output file path because we want to keep the results into memory instead of saving to a file
+		patterns = algo.runAlgorithm(input, null, minsup);  
+		
+		// Show the MFI-Tree for debugging!
+//				System.out.println(algo.mfiTree);
+		
+		// show the execution time and other statistics
+		algo.printStats();
 //		System.out.println("$$$$$$$$$$$");
 
 //		//===============================================================

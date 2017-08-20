@@ -5,9 +5,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -76,6 +78,8 @@ public class PrePostMax {
 	public int[] sameItems;
 	public int nlNodeCount;
 	
+	
+	public ArrayList<int[]> listaMax;
 	// if this parameter is set to true, the PrePost+ algorithm is run instead of PrePost
 	// (both are implemented in this file, because they have similarities)
 	public boolean usePrePostPlus = false;
@@ -139,6 +143,7 @@ public class PrePostMax {
 
 		// ==========================
 		// Read Dataset
+		// ler as transações e calcula frequencia de cada item eliminando items não frequentes
 		getData(filename, minsup);
 
 		resultLen = 0;
@@ -154,7 +159,7 @@ public class PrePostMax {
 		// Initialize tree
 		initializeTree();
 		sameItems = new int[numOfFItem];
-
+		listaMax = new ArrayList<int[]>();
 		int from_cursor = bf_cursor;
 		int from_col = bf_col;
 		int from_size = bf_currentSize;
@@ -607,7 +612,7 @@ public class PrePostMax {
 
 		// create a stringuffer
 		StringBuilder buffer = new StringBuilder();
-		
+		ArrayList<Integer> listaAux = new ArrayList<Integer>();
 		if(curNode.support >= minSupport) {
 			outputCount++;
 	
@@ -615,20 +620,24 @@ public class PrePostMax {
 			for (int i = 0; i < resultLen; i++) {
 				buffer.append(item[result[i]].index);
 				buffer.append(' ');
+				listaAux.add(item[result[i]].index);
 			}
 			// append the support of the itemset
 			buffer.append("#SUP: ");
 			buffer.append(curNode.support);
 			buffer.append("\n");
+			atualizarLista(listaAux, curNode.support);
 		}
 		// === Write all combination that can be made using the node list of
 		// this itemset
 		if (sameCount > 0) {
 			// generate all subsets of the node list except the empty set
 			for (long i = 1, max = 1 << sameCount; i < max; i++) {
+				listaAux = new ArrayList<Integer>();
 				for (int k = 0; k < resultLen; k++) {
 					buffer.append(item[result[k]].index);
 					buffer.append(' ');
+					listaAux.add(item[result[k]].index);
 				}
 
 				// we create a new subset
@@ -639,18 +648,54 @@ public class PrePostMax {
 						// if yes, add it to the set
 						buffer.append(item[sameItems[j]].index);
 						buffer.append(' ');
+						listaAux.add(item[sameItems[j]].index);
 						// newSet.add(item[sameItems[j]].index);
 					}
 				}
 				buffer.append("#SUP: ");
 				buffer.append(curNode.support);
 				buffer.append("\n");
+				atualizarLista(listaAux, curNode.support);
 				outputCount++;
 			}
 		}
 		// write the strinbuffer to file and create a new line
 		// so that we are ready for writing the next itemset.
 		writer.write(buffer.toString());
+	}
+	
+	public void atualizarLista(ArrayList<Integer> listaAux, int suporte) {
+		int tamanho = listaMax.size();
+		int tamanhoIS = listaAux.size();
+		boolean padraoMax = false;;
+		for (int i = 0; i < tamanho; i++) {
+			int[] temp = listaMax.get(i);
+			if (temp[0] < 0) {
+				continue;
+			}
+			int tamanhoPadrao = temp[0];
+			int tamanhoISAux = tamanhoIS;
+			for (int j = 0; j < tamanhoIS; j++) {
+				if (temp[listaAux.get(j)+1] == 1) {
+					tamanhoISAux--;
+					tamanhoPadrao--;
+				}
+				if (tamanhoPadrao == 0 && tamanhoISAux > 0) {
+					temp[0] = -1;
+				}
+				if (tamanhoISAux == 0 && tamanhoPadrao > 0 ) {
+					return;
+				}
+			}
+		}
+		int[] temp = new int[1000];
+		listaMax.add(temp);
+		temp[0] = tamanhoIS;
+		temp[1] = suporte;
+		for (int j = 0; j < tamanhoIS; j++) {
+			listaMax.get(tamanho)[listaAux.get(j)+1] = 1;
+		}
+		
 	}
 
 	/**

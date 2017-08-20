@@ -83,7 +83,7 @@ public class AlgoCharmMFI {
 	 * @return the set of maximal itemsets (if the user chose to keep the result in memory.
 	 * @throws IOException An exception if an error occurs while writting the output to a file.
 	 */
-	public Itemsets runAlgorithm(String output, Itemsets frequentClosed) throws IOException {
+	public Itemsets runAlgorithm(String output, Itemsets frequentClosed, long start) throws IOException {
 		
 		// if the user want to keep the result into memory
 		if(output == null){
@@ -97,7 +97,7 @@ public class AlgoCharmMFI {
 		maximalItemsets.setName("FREQUENT MAXIMAL ITEMSETS");
 		
 		// record the start time of the algorithm
-		startTimestamp = System.currentTimeMillis();
+		startTimestamp = start;
 
 		// get the size of the largest closed itemset.
 		int maxItemsetLength = frequentClosed.getLevels().size();

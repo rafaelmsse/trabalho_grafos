@@ -79,6 +79,8 @@ public class PrePost {
 	public int[] sameItems;
 	public int nlNodeCount;
 	
+	public Map<Integer, Integer> mapItemCountTotal;
+	
 	// if this parameter is set to true, the PrePost+ algorithm is run instead of PrePost
 	// (both are implemented in this file, because they have similarities)
 	public boolean usePrePostPlus = false;
@@ -433,11 +435,11 @@ public class PrePost {
 		}
 		// close the input file
 		reader.close();
-
+		
 		minSupport = (int) Math.ceil(support * numOfTrans);
 
 		numOfFItem = mapItemCount.size();
-
+		mapItemCountTotal = mapItemCount;
 		Item[] tempItems = new Item[numOfFItem];
 		int i = 0;
 		for (Entry<Integer, Integer> entry : mapItemCount.entrySet()) {
@@ -624,10 +626,12 @@ public class PrePost {
 			// append the support of the itemset
 //			buffer.append("#SUP: ");
 //			buffer.append(curNode.support);
+			this.lista.add(listaAux);
 			//buffer.append("\n");
 		}
 		// === Write all combination that can be made using the node list of
 		// this itemset
+		listaAux = new ArrayList<>();
 		if (sameCount > 0) {
 			// generate all subsets of the node list except the empty set
 			for (long i = 1, max = 1 << sameCount; i < max; i++) {
@@ -652,13 +656,14 @@ public class PrePost {
 //				buffer.append("#SUP: ");
 //				buffer.append(curNode.support);
 				buffer.append("\n");
+				this.lista.add(listaAux);
 				outputCount++;
 			}
 		}
 		// write the strinbuffer to file and create a new line
 		// so that we are ready for writing the next itemset.
 		//writer.write(buffer.toString());
-		this.lista.add(listaAux);
+		
 	}
 
 	/**

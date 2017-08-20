@@ -20,7 +20,7 @@ public class MainTestPrePostPlus {
 		String input = fileToPath("contextPasquier99.txt");
 		String output = ".//xdxd.txt";  // the path for saving the frequent itemsets found
 		
-		double minsup = 0.4; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.5; // means a minsup of 2 transaction (we used a relative support)
 		
 		// Applying the algorithm
 		PrePostMax prepost = new PrePostMax();
@@ -28,6 +28,12 @@ public class MainTestPrePostPlus {
 		prepost.setUsePrePostPlus(true);
 		prepost.runAlgorithm(input, minsup, output);
 		prepost.printStats();
+		int count = 0;
+		for (int[] l : prepost.listaMax) {
+			if (l[0] > 0)
+				count++;
+		}
+		System.out.println(count);
 	}
 	
 	public static String fileToPath(String filename) throws UnsupportedEncodingException{

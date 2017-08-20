@@ -141,7 +141,7 @@ public class AlgoFPMax {
 		// (1) PREPROCESSING: Initial database scan to determine the frequency of each item
 		// The frequency is stored in a map:
 		//    key: item   value: support
-		originalMapSupport = scanDatabaseToDetermineFrequencyOfSingleItems(input); 
+		//originalMapSupport = scanDatabaseToDetermineFrequencyOfSingleItems(input); 
 
 		// convert the minimum support as percentage to a
 		// relative minimum support
@@ -166,19 +166,18 @@ public class AlgoFPMax {
 		prepost.setUsePrePostPlus(true);
 		List<List<Integer>> lista = new ArrayList<List<Integer>>();
 		prepost.runAlgorithm(input, minsupp, output,lista);
+		originalMapSupport = prepost.mapItemCountTotal;
 		for (List<Integer> elemento : lista) {			
 		
 			// if the line is  a comment, is  empty or is a
 			// kind of metadata
 			
-			
-			
-			List<Integer> transaction = elemento;			
+							
 			
 			// sort item in the transaction by descending order of support
-			Collections.sort(transaction, comparatorOriginalOrder);
+			Collections.sort(elemento, comparatorOriginalOrder);
 			// add the sorted transaction to the fptree.
-			tree.addTransaction(transaction);
+			tree.addTransaction(elemento);
 		}
 		// close the input file
 		reader.close();
@@ -531,7 +530,7 @@ public class AlgoFPMax {
 	 * Print statistics about the algorithm execution to System.out.
 	 */
 	public void printStats() {
-		System.out.println("=============  FP-Max v0.96r14  - STATS =============");
+		System.out.println("=============  FP-Max/PRE v0.96r14  - STATS =============");
 		long temps = endTime - startTimestamp;
 		System.out.println(" Transactions count from database : " + transactionCount);
 		System.out.print(" Max memory usage: " + MemoryLogger.getInstance().getMaxMemory() + " mb \n");
