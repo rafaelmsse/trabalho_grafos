@@ -21,7 +21,7 @@ public class MainTestFPMax_saveToMemory {
 		String input = fileToPath("contextPasquier99.txt");  // the database
 
 		// the minimum support threshold
-		double minsup = 0.7; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.5; // means a minsup of 2 transaction (we used a relative support)
 
 		// Applying the FPMax algorithm
 		AlgoFPMax2 algo2 = new AlgoFPMax2();
