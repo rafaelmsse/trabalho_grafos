@@ -704,7 +704,7 @@ public class PrePostMax {
 	 */
 	public void printStats() {
 		String prePost = usePrePostPlus ? "PrePost+" : "PrePost";
-		System.out.println("========== " + prePost + " - STATS ============");
+		System.out.println("========== " + prePost + Max " - STATS ============");
 		System.out.println(" Minsup = " + minSupport
 				+ "\n Number of transactions: " + numOfTrans);
 		System.out.println(" Number of frequent  itemsets: " + outputCount);

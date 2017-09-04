@@ -18,7 +18,8 @@ public class MainTestFPMax_saveToMemory {
 
 	public static void main(String [] arg) throws FileNotFoundException, IOException{
 		// Loading the transaction database
-		String input = fileToPath("contextPasquier99.txt");  // the database
+		String input = fileToPath("contextPasquier99.txt");
+		//String input = fileToPath("bd_commits.txt");
 
 		// the minimum support threshold
 		double minsup = 0.5; // means a minsup of 2 transaction (we used a relative support)

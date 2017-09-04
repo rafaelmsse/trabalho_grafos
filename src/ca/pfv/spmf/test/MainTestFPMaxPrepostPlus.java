@@ -13,7 +13,7 @@ import ca.pfv.spmf.algorithms.frequentpatterns.fin_prepost.PrePostMax;
  * Example of how to use PrePost+ algorithm from the source code.
  * @author Philippe Fournier-Viger, 2015
  */
-public class MainTestPrePostPlus {
+public class MainTestFPMaxPrepostPlus {
 
 	public static void main(String [] arg) throws IOException{
 
@@ -21,7 +21,7 @@ public class MainTestPrePostPlus {
 		//String input = fileToPath("bd_commits.txt");
 		String output = ".//xdxd.txt";  // the path for saving the frequent itemsets found
 		
-		double minsup = 0.3; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.5; // means a minsup of 2 transaction (we used a relative support)
 		
 		// Applying the algorithm
 		PrePostMax prepost = new PrePostMax();
@@ -38,7 +38,7 @@ public class MainTestPrePostPlus {
 	}
 	
 	public static String fileToPath(String filename) throws UnsupportedEncodingException{
-		URL url = MainTestPrePostPlus.class.getResource(filename);
+		URL url = MainTestFPMaxPrepostPlus.class.getResource(filename);
 		 return java.net.URLDecoder.decode(url.getPath(),"UTF-8");
 	}
 }

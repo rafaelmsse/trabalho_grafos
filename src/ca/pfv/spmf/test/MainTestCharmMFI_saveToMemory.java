@@ -21,10 +21,10 @@ public class MainTestCharmMFI_saveToMemory {
 	public static void main(String [] arg) throws IOException{
 		
 		// the file paths
-		String input = fileToPath("contextPasquier99.txt");  // the database
-
+		//String input = fileToPath("contextPasquier99.txt");
+		String input = fileToPath("methods.txt");
 		// minimum support
-		double minsup = 0.5; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.009; // means a minsup of 2 transaction (we used a relative support)
 
 		// Loading the binary context
 		TransactionDatabase database = new TransactionDatabase();
@@ -48,16 +48,16 @@ public class MainTestCharmMFI_saveToMemory {
 		algo2.runAlgorithm(null, algo.getClosedItemsets(),startTimestamp);
 		
 		// Code to browse the itemsets in memory
-//		System.out.println(" ===== MAXIMAL ITEMSETS FOUND ====");
-//		Itemsets itemsets = algo2.getItemsets();
-//		for(List<Itemset> level : itemsets.getLevels()) {
-//			 for(Itemset itemset : level) {
-//				 for(Integer item : itemset.itemset) {
-//					 System.out.print(item );
-//				 }
-//				 System.out.println( "  support " + itemset.getAbsoluteSupport());
-//			 }
-//		}
+		System.out.println(" ===== MAXIMAL ITEMSETS FOUND ====");
+		Itemsets itemsets = algo2.getItemsets();
+		for(List<Itemset> level : itemsets.getLevels()) {
+			 for(Itemset itemset : level) {
+				 for(Integer item : itemset.itemset) {
+					 System.out.print(item +" , ");
+				 }
+				 System.out.println( "  support " + itemset.getAbsoluteSupport());
+			 }
+		}
 		
 		// Print statistics about the algorithm execution
 		algo2.printStats(database.size());
